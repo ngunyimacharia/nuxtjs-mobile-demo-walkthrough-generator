@@ -1,34 +1,56 @@
 <template>
-  <cld-video
-    public-id="nuxtjs-mobile-demo-walkthrough-generator/iphone_se_template"
-    width="1000"
-    crop="scale"
-    quality="auto"
-    controls="true"
-    autoplay="true"
-  >
-    <cld-transformation
-      overlay="video:nuxtjs-mobile-demo-walkthrough-generator:pexels-artem-podrez-6003998"
-      width="405"
-      height="750"
-      gravity="center"
-      x="-385"
-      y="0"
-      audioCodec="none"
+  <div>
+    <Form
+      @InstructorVideoUploaded="instructorVideoUploaded"
+      @MobileAppVideoUploaded="mobileAppVideoUploaded"
     />
-    <cld-transformation
-      overlay="video:nuxtjs-mobile-demo-walkthrough-generator:pexels-anthony-shkraba-7165698"
-      width="300"
-      height="300"
-      gravity="south_east"
-      radius="150"
-      x="100"
-      y="100"
-      crop="fill"
-    />
-  </cld-video>
+    <cld-video
+      public-id="nuxtjs-mobile-demo-walkthrough-generator/iphone_se_template"
+      width="1000"
+      crop="scale"
+      quality="auto"
+      controls="true"
+      autoplay="true"
+      v-if="mobileAppVideo && instructorVideo"
+    >
+      <cld-transformation
+        overlay="video:nuxtjs-mobile-demo-walkthrough-generator:pexels-artem-podrez-6003998"
+        width="405"
+        height="750"
+        gravity="center"
+        x="-385"
+        y="0"
+        audioCodec="none"
+      />
+      <cld-transformation
+        overlay="video:nuxtjs-mobile-demo-walkthrough-generator:pexels-anthony-shkraba-7165698"
+        width="300"
+        height="300"
+        gravity="south_east"
+        radius="150"
+        x="100"
+        y="100"
+        crop="fill"
+      />
+    </cld-video>
+  </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      instructorVideo: null,
+      mobileAppVideo: null,
+    };
+  },
+  methods: {
+    instructorVideoUploaded(public_id) {
+      this.instructorVideo = public_id;
+    },
+    mobileAppVideoUploaded(public_id) {
+      this.mobileAppVideo = public_id;
+    },
+  },
+};
 </script>
