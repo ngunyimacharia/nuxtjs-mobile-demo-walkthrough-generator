@@ -97,6 +97,12 @@
                 >
                   Save
                 </button>
+                <p
+                  class="my-5 text-sm"
+                  v-if="uploadingMobileAppVideo || uploadingInstructorVideo"
+                >
+                  Upload in progress
+                </p>
               </div>
             </div>
           </form>
@@ -115,7 +121,10 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      uploadingMobileAppVideo: false,
+      uploadingInstructorVideo: false,
+    };
   },
   methods: {
     submit(e) {
@@ -124,6 +133,8 @@ export default {
     },
 
     async uploadMobileAppVideo(e) {
+      this.uploadingMobileAppVideo = true;
+
       // Mobile app video file
       let file = e.target.mobile_app_video.files[0];
 
@@ -136,12 +147,14 @@ export default {
         folder: `nuxtjs-mobile-demo-walkthrough-generator`,
       });
 
-      console.log(resp);
-
       this.$emit("MobileAppVideoUploaded", resp.public_id);
+
+      this.uploadingMobileAppVideo = false;
     },
 
     async uploadInstructorVideo(e) {
+      this.uploadingInstructorVideo = true;
+
       // Instructor video file
       let file = e.target.instructor_video.files[0];
 
@@ -154,9 +167,9 @@ export default {
         folder: `nuxtjs-mobile-demo-walkthrough-generator`,
       });
 
-      console.log(resp);
-
       this.$emit("InstructorVideoUploaded", resp.public_id);
+
+      this.uploadingInstructorVideo = false;
     },
     readData(f) {
       return new Promise((resolve) => {

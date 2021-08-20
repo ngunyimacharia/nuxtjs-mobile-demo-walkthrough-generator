@@ -11,10 +11,11 @@
       quality="auto"
       controls="true"
       autoplay="true"
+      class="m-auto"
       v-if="mobileAppVideo && instructorVideo"
     >
       <cld-transformation
-        overlay="video:nuxtjs-mobile-demo-walkthrough-generator:pexels-artem-podrez-6003998"
+        :overlay="`video:${mobileAppVideo}`"
         width="405"
         height="750"
         gravity="center"
@@ -23,7 +24,7 @@
         audioCodec="none"
       />
       <cld-transformation
-        overlay="video:nuxtjs-mobile-demo-walkthrough-generator:pexels-anthony-shkraba-7165698"
+        :overlay="`video:${instructorVideo}`"
         width="300"
         height="300"
         gravity="south_east"
@@ -46,10 +47,10 @@ export default {
   },
   methods: {
     instructorVideoUploaded(public_id) {
-      this.instructorVideo = public_id;
+      this.instructorVideo = public_id.replace("/", ":");
     },
     mobileAppVideoUploaded(public_id) {
-      this.mobileAppVideo = public_id;
+      this.mobileAppVideo = public_id.replace("/", ":");
     },
   },
 };
